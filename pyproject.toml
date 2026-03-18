@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "test_service"
+version = "0.1.0"
+description = "core-модуль для fastapi с postgres и redis"
+authors = ["Разработчик <you@example.com>"]
+readme = "README.md"
+packages = [{include = "app"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.0"
+uvicorn = {extras = ["standard"], version = "^0.30.0"}
+sqlalchemy = "^2.0.35"
+asyncpg = "^0.29.0"
+redis = "^5.0.0"
+pydantic-settings = "^2.4.0"
+python-dotenv = "^1.0.0"
+alembic = "^1.13.0"  # для миграций
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-asyncio = "^0.23.0"
+pytest-cov = "^4.1.0"
+mypy = "^1.8.0"
+ruff = "^0.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
