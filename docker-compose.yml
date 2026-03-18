@@ -31,6 +31,24 @@ services:
       timeout: 5s
       retries: 5
 
+  app:
+    build: .
+    container_name: test_app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      POSTGRES_HOST: postgres
+      REDIS_HOST: redis
+      # можно добавить другие переменные, если нужно (например, DEBUG=true)
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - .:/app   # монтируем код для автоматического перезапуска при изменениях (удобно при разработке)
+
 volumes:
   postgres_data:
   redis_data:

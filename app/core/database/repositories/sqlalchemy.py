@@ -8,7 +8,7 @@ from app.core.database.repositories.base import BaseRepository, ModelType
 
 
 class SQLAlchemyRepository(BaseRepository[ModelType]):
-    """generic-репозиторий, работающий через алхимию."""
+    """generic-репозиторий работающий через алхимию"""
 
     def __init__(self, session: AsyncSession, model: Type[ModelType]):
         self.session = session

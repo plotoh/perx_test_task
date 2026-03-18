@@ -1,6 +1,7 @@
 """fastapi app"""
 
 from fastapi import FastAPI
+
 from app.core.lifespan import lifespan
 from app.core.middlewares import LoggingMiddleware
 from app.core.exceptions.handlers import (
@@ -9,6 +10,8 @@ from app.core.exceptions.handlers import (
     cache_exception_handler,
 )
 from app.core.exceptions import AppException, DatabaseException, CacheException
+
+from app.api_example.users import router as users_router
 
 
 def create_app() -> FastAPI:
@@ -28,6 +31,7 @@ def create_app() -> FastAPI:
     app.add_exception_handler(CacheException, cache_exception_handler)
 
     # роутеры
+    app.include_router(users_router, prefix="/api/v1/users", tags=["users"])
 
     return app
 

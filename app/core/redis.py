@@ -1,4 +1,4 @@
-"""клиент для редиса (синглтон)."""
+"""клиент для редиса"""
 
 from redis.asyncio import Redis, ConnectionPool
 from app.core.config import settings
@@ -8,7 +8,6 @@ _redis_client: Redis | None = None
 
 
 async def get_redis_client() -> Redis:
-    """возвращает один и тот же клиент (пул)."""
     global _redis_pool, _redis_client
     if _redis_client is None:
         _redis_pool = ConnectionPool.from_url(settings.redis_url, decode_responses=True)
@@ -17,7 +16,6 @@ async def get_redis_client() -> Redis:
 
 
 async def close_redis_client() -> None:
-    """закрываем соединения при остановке."""
     global _redis_pool, _redis_client
     if _redis_client:
         await _redis_client.close()
