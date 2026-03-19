@@ -11,7 +11,7 @@ from app.core.exceptions.handlers import (
 )
 from app.core.exceptions import AppException, DatabaseException, CacheException
 
-from app.api_example.users import router as users_router
+from app.example.api.users import router as users_router
 
 
 def create_app() -> FastAPI:

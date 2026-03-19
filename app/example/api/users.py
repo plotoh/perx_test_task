@@ -1,17 +1,17 @@
 """ручки для работы с пользователями"""
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.services_example.user import UserService
+from app.example.services.user import UserService
 from app.core.dependencies import get_user_service
-from app.schemas.user import UserCreate, UserResponse
+from app.example.schemas.user import UserCreate, UserResponse
 
 router = APIRouter()
 
 
 @router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def create_user(
-    user_data: UserCreate,
-    service: UserService = Depends(get_user_service),
+        user_data: UserCreate,
+        service: UserService = Depends(get_user_service),
 ) -> UserResponse:
     """создаем нового пользователя"""
     try:
@@ -23,11 +23,11 @@ async def create_user(
 
 @router.get("/{user_id}", response_model=UserResponse)
 async def get_user(
-    user_id: int,
-    service: UserService = Depends(get_user_service),
+        user_id: int,
+        service: UserService = Depends(get_user_service),
 ) -> UserResponse:
     """получаем пользователя по id."""
     user = await service.get_user(user_id)
     if not user:
         raise HTTPException(status_code=404, detail="пользователь не найден")
-    return UserResponse.from_orm(user)
+    return UserResponse.model_validate(user)

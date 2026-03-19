@@ -1,10 +1,10 @@
 """бизнес-логика юзера"""
-from app.models_example.user import User
-from app.repositories_example.user import UserRepository
+from app.example.models.user import User
+from app.example.repositories.user import UserRepository
 from redis.asyncio import Redis
 import json
 
-from app.schemas.user import UserResponse
+from app.example.schemas.user import UserResponse
 
 
 class UserService:

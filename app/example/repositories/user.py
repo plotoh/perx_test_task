@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db_session
 from app.core.database.repositories.sqlalchemy import SQLAlchemyRepository
-from app.models_example.user import User
+from app.example.models.user import User
 
 
 class UserRepository(SQLAlchemyRepository[User]):
