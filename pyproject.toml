@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "test_service for perx"
+name = "test-service"
 version = "0.3"
 authors = ["Platon"]
 description = "core-модуль для fastapi с postgres и redis"

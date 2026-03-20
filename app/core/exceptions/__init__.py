@@ -2,30 +2,30 @@
 
 
 class AppException(Exception):
-    """корневое исключение."""
+    """корневое исключение"""
     pass
 
 
 class DatabaseException(AppException):
-    """ошибка базы данных."""
+    """ошибка базы данных"""
     pass
 
 
 class CacheException(AppException):
-    """ошибка кэша."""
+    """ошибка кэша"""
     pass
 
 
 class ConfigurationException(AppException):
-    """ошибка конфигурации."""
+    """ошибка конфигурации"""
     pass
 
 
 class NotFoundError(AppException):
-    """ресурс не найден."""
+    """ресурс не найден"""
     pass
 
 
 class ValidationError(AppException):
-    """ошибка валидации."""
+    """ошибка валидации"""
     pass

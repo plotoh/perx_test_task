@@ -16,35 +16,35 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     setup_logging(debug=settings.DEBUG)
-    logger.info("запускаемся...")
+    logger.info("запуск")
 
-    # проверка подключение бд
+    # проверка подключений
     try:
         async with engine.begin() as conn:
             await conn.execute(text("SELECT 1"))
-        logger.info("база данных ок")
+        logger.info("Подключение к бд -- ОК")
     except Exception as e:
-        logger.error(f"база не отвечает: {e}")
-
-    # проверка редис
+        logger.critical(f"Подключение к бд не удалось: {e}")
+        raise RuntimeError("Подключение к бд не удалось") from e
     try:
         redis_client = await get_redis_client()
         await redis_client.ping()
-        logger.info("redis ок")
+        logger.info("Подключение к редису -- ОК")
     except Exception as e:
-        logger.error(f"redis не отвечает: {e}")
+        logger.critical(f"Подключение к редису не удалось: {e}")
+        raise RuntimeError("Подключение к редису не удалось") from e
 
+    # создание таблиц. изначально хотел сделать алембик, но думаю для тестового уместно и через base
     try:
-        # Создаст все таблицы, которые есть в Base.metadata
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
-        logger.info("таблицы успешно созданы (или уже существуют)")
+        logger.info("Таблицы успешно созданы / подтверждены")
     except Exception as e:
-        logger.error(f"ошибка при создании таблиц: {e}")
-
+        logger.error(f"Ошибка при создании таблиц: {e}")
     yield
+
     # стоп
-    logger.info("завершаем работу...")
+    logger.info("Инициирую закрытие подклюеий")
     await engine.dispose()
     await close_redis_client()
-    logger.info("соединения закрыты")
+    logger.info("Подключения закрыты")
