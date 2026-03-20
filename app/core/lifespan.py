@@ -41,6 +41,8 @@ async def lifespan(app: FastAPI):
         logger.info("Таблицы успешно созданы / подтверждены")
     except Exception as e:
         logger.error(f"Ошибка при создании таблиц: {e}")
+        raise RuntimeError("Ошибка при создании таблиц") from e
+
     yield
 
     # стоп
